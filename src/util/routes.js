@@ -7,6 +7,8 @@ export const matchRoutes = role => {
   }
   const ROUTE_MODE = process.env.VUE_APP_ROUTE;
   let accessRoutes = [];
+  console.log(role, ROUTE_MODE);
+
   switch (ROUTE_MODE) {
     case "NONE":
       accessRoutes = diffRoute(role, asyncRoutes);
@@ -84,6 +86,7 @@ const diffRouteLocal = (source, target) => {
   let routes = {};
   common.forEach(item => {
     const { name, local } = item;
+    console.log(item);
     if (!routes[name]) {
       if (local) {
         routes[name] = item;

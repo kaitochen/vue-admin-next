@@ -1,14 +1,37 @@
 import layout from "../layout/index";
 const asyncRoutes = [
   {
-    path: "/system",
-    name: "System",
+    path: "/role",
+    name: "Role",
     component: layout,
-    meta: { title: "系统管理" },
-    icon: "system",
-    title: "系统管理",
+    meta: { title: "权限管理" },
+    icon: "menu",
+    title: "权限管理",
     local: true,
-    children: []
+    children: [
+      {
+        path: "/menuManager",
+        name: "MenuManager",
+        component: () => import("@/views/Menu/menuManager"),
+        meta: { title: "菜单管理" },
+        local: true
+      },
+      {
+        path: "/pageManager",
+        name: "PageManager",
+        component: () => import("@/views/Menu/pageManager"),
+        meta: { title: "页面管理" },
+        local: true
+      },
+      {
+        path: "/generator",
+        name: "Generator",
+        component: () => import("@/views/Generator/generator"),
+        meta: { title: "页面设计器" },
+        local: true,
+        hidden: true
+      }
+    ]
   }
 ];
 export default asyncRoutes;

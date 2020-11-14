@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Loading } from "element-ui";
 let request = axios.create({
-  baseURL: "http://dev.mundo.beiru168.com"
+  baseURL: "https://dev.api.beiru168.com/framework"
 });
 
 // request.defaults.baseURL = _domain;

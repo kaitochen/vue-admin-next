@@ -5,5 +5,4 @@ $--color-primary: #3377FF;
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 @import "~element-ui/packages/theme-chalk/src/index";
-
-
+@import "~admin-page-generator/theme/default.scss";

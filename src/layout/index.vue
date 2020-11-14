@@ -6,9 +6,9 @@
       <section class="view">
         <tabs />
         <div class="router-container">
-          <keep-cache :exclude="excludeRoutes">
-            <router-view :key="$route.fullPath" :route="$route.path" />
-          </keep-cache>
+          <!-- <keep-active :exclude="excludeRoutes"> -->
+          <router-view :key="$route.fullPath" :route="$route.path" />
+          <!-- </keep-active> -->
         </div>
       </section>
     </div>

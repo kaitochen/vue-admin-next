@@ -14,6 +14,7 @@
     "core-js": "^3.6.5",
     "element-tabs": "^0.1.0",
     "element-ui": "^2.14.0",
+    "mockjs": "^1.1.0",
     "nprogress": "^0.2.0",
     "vue": "^2.6.11",
     "vue-keep-active": "^0.1.0",
