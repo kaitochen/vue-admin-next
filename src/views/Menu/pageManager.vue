@@ -120,9 +120,13 @@
       class="generate-dialog"
     >
       <generate-form
+        :id="pageId"
         @quit="closeDialog"
         @import="importConfig"
         @save="saveConfig"
+        @getHistory="getHistory"
+        @getHistoryInfo="getHistoryInfo"
+        @deleteHistory="deleteHistory"
       ></generate-form>
     </el-dialog>
   </div>
@@ -137,7 +141,10 @@ import {
   editPage,
   deletePage,
   importPageConfig,
-  savePageConfig
+  getPageHistory,
+  addPageHistory,
+  pageHistoryDetail,
+  deleteHistory
 } from "@/api/role";
 export default {
   name: "menuManager",
@@ -360,8 +367,38 @@ export default {
       });
     },
     saveConfig(data) {
-      savePageConfig(data).then(res => {
+      addPageHistory({
+        ...data,
+        pageId: this.pageId
+      }).then(res => {
         console.log(res);
+      });
+      // savePageConfig(data).then(res => {
+      //   console.log(res);
+      // });
+    },
+    getHistory(fn) {
+      getPageHistory(this.pageId).then(res => {
+        if (res.code === 200) {
+          fn(res.data);
+        }
+      });
+    },
+    getHistoryInfo(params) {
+      let { id } = params.data;
+      pageHistoryDetail(id).then(res => {
+        if (res.code === 200) {
+          params.callback(res.data);
+        }
+      });
+    },
+    deleteHistory(params) {
+      console.log(params);
+      let { id } = params.data;
+      deleteHistory(id).then(res => {
+        if (res.code === 200) {
+          params.callback(res.data);
+        }
       });
     }
   },

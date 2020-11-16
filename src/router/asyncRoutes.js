@@ -22,14 +22,6 @@ const asyncRoutes = [
         component: () => import("@/views/Menu/pageManager"),
         meta: { title: "页面管理" },
         local: true
-      },
-      {
-        path: "/generator",
-        name: "Generator",
-        component: () => import("@/views/Generator/generator"),
-        meta: { title: "页面设计器" },
-        local: true,
-        hidden: true
       }
     ]
   }

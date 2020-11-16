@@ -4,7 +4,15 @@ export const deepCopy = obj => {
 export const jsonToFormData = json => {
   let formData = new FormData();
   for (let k in json) {
-    formData.append(k, json[k]);
+    let value;
+    if (value instanceof Array) {
+      value = json[k];
+    } else if (value instanceof Object) {
+      value = JSON.stringify(value);
+    } else {
+      value = json[k];
+    }
+    formData.append(k, value);
   }
   return formData;
 };

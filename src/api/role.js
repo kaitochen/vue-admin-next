@@ -126,3 +126,32 @@ export const savePageConfig = data => {
     data: data
   });
 };
+
+export const getPageHistory = id => {
+  return Request({
+    url: "/admin/access/v1/cms-page-version/list/" + id,
+    method: "GET"
+  });
+};
+
+export const addPageHistory = data => {
+  return Request({
+    url: "/admin/access/v1/cms-page-version/add",
+    method: "POST",
+    data: jsonToFormData(data)
+  });
+};
+
+export const pageHistoryDetail = id => {
+  return Request({
+    url: "/admin/access/v1/cms-page-version/details/" + id,
+    method: "GET"
+  });
+};
+
+export const deleteHistory = id => {
+  return Request({
+    url: "/admin/access/v1/cms-page-version/del/" + id,
+    method: "DELETE"
+  });
+};

@@ -142,6 +142,9 @@
         <el-form-item label="名称" prop="name">
           <el-input v-model="dialogForm.name"></el-input>
         </el-form-item>
+        <el-form-item label="权限标识" prop="role">
+          <el-input v-model="dialogForm.role"></el-input>
+        </el-form-item>
         <el-form-item label="排序" prop="sort">
           <el-input-number
             class="flex-full"
@@ -234,7 +237,8 @@ export default {
         value: "id",
         label: "name",
         children: "pageList",
-        checkStrictly: true
+        checkStrictly: false
+        // multiple: true
       }
     };
   },
@@ -298,6 +302,7 @@ export default {
       this.dialogForm = {
         menuId: scope.row.id,
         icon: "",
+        role: "",
         name: "",
         sort: 0,
         hide: "NO",
@@ -315,6 +320,7 @@ export default {
         icon: data.icon,
         name: data.name,
         sort: data.sort,
+        role: data.role,
         hide: data.hide,
         pageId: data.pageId
       };
