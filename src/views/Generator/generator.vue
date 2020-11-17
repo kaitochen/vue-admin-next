@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <generate-form></generate-form>
+    <generate-form :id="1"></generate-form>
   </div>
 </template>
 <script>

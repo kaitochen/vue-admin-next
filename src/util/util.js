@@ -1,17 +1,29 @@
-import axios from "axios";
-export const page = params => {
+import router from "@/router/index";
+import request from "@/util/request";
+export const _page = params => {
   let { body = {}, ..._params } = params;
-  return axios({
+  return request({
     ..._params,
     data: body
   });
 };
 
-export const request = params => {
+export const _request = params => {
   let { body = {}, ..._params } = params;
-  console.log("request", params);
-  return axios({
+  return request({
     ..._params,
     data: body
   });
+};
+
+export const _route = params => {
+  if (params.dynamic) {
+    router.push({
+      path: "/generate/page/" + params.url
+    });
+  } else if (params.static) {
+    router.push({
+      path: "/" + params.url
+    });
+  }
 };

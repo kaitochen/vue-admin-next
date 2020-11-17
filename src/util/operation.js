@@ -5,10 +5,10 @@ export const jsonToFormData = json => {
   let formData = new FormData();
   for (let k in json) {
     let value;
-    if (value instanceof Array) {
+    if (json[k] instanceof Array) {
       value = json[k];
-    } else if (value instanceof Object) {
-      value = JSON.stringify(value);
+    } else if (json[k] instanceof Object) {
+      value = JSON.stringify(json[k]);
     } else {
       value = json[k];
     }

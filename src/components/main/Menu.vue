@@ -11,21 +11,19 @@
         <el-submenu
           v-for="(item, index) in routes"
           :index="index.toString()"
-          :key="item.path + '_' + index"
+          :key="index"
         >
           <template slot="title">
             <!-- <i class="el-icon-location" /> -->
-            <i :class="'icon_' + item.icon"></i>
-            <span style="margin-left: 12px">{{
-              item.meta.title || item.name
-            }}</span>
+            <i style="color: #ffffff" :class="item.icon"></i>
+            <span style="margin-left: 12px">{{ item.name }}</span>
           </template>
           <el-menu-item
             v-for="route in item.children"
-            :key="route.path"
-            :index="resolvePath(item.path, route.path)"
-            @click="gotoRoute(item, route)"
-            >{{ route.meta.title || route.name }}</el-menu-item
+            :key="route.pageRoute"
+            :index="resolvePath(route.pageRoute)"
+            @click="gotoRoute(route)"
+            >{{ route.name }}</el-menu-item
           >
         </el-submenu>
       </el-menu>
@@ -34,21 +32,17 @@
 </template>
 
 <script>
-import path from "path";
-// import elMenu from "@/el-components/menu/index";
-// import elSubmenu from "@/el-components/submenu/index";
-// import elMenuItem from "@/el-components/menu-item/index";
 export default {
   name: "Menu",
   // components: { elMenu, elSubmenu},
   computed: {
     routes: function() {
-      return this.filterHiddenRoute(this.$store.getters.routes);
+      return this.$store.getters.menu;
     }
   },
   methods: {
-    resolvePath(basePath, routePath) {
-      return path.resolve(basePath, routePath);
+    resolvePath(routePath) {
+      return routePath;
     },
     filterHiddenRoute(routes) {
       if (!routes || routes.length <= 0) {
@@ -65,11 +59,11 @@ export default {
           };
         });
     },
-    gotoRoute(route, _route) {
+    gotoRoute(_route) {
       this.$router.push({
-        path: path.resolve(route.path, _route.path),
+        path: _route.pageRoute,
         _params: {
-          title: _route.meta.title
+          title: _route.name
         }
       });
     }

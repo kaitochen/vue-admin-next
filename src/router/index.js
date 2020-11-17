@@ -36,6 +36,17 @@ export const baseRoutes = [
     name: "404",
     component: () => import("@/layout/404.vue"),
     hidden: true
+  },
+  {
+    path: "/generate",
+    component: layout,
+    children: [
+      {
+        path: "page/:type",
+        component: () => import("@/views/generator.vue"),
+        name: "Generator"
+      }
+    ]
   }
 ];
 

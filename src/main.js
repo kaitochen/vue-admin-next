@@ -8,12 +8,17 @@ import MlTabs from "element-tabs";
 import KeepActive from "vue-keep-active";
 import "./router/permission";
 import "./element.scss";
-import { page, request } from "@/util/util.js";
+import { _page, _request, _route } from "@/util/util.js";
 Vue.config.productionTip = false;
 Vue.use(elementUI, { size: "small" });
 Vue.use(MlTabs);
 Vue.use(KeepActive);
-Vue.use(Generator, { page: page, route: 222, request: request, http: 444 });
+Vue.use(Generator, {
+  page: _page,
+  route: _route.bind(Vue),
+  request: _request,
+  http: 444
+});
 import "./api/mock";
 new Vue({
   router,

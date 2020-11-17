@@ -155,3 +155,10 @@ export const deleteHistory = id => {
     method: "DELETE"
   });
 };
+
+export const getPageInfo = type => {
+  return Request({
+    url: "/admin/access/v1/cms-page/details/route-name/" + type,
+    method: "GET"
+  });
+};

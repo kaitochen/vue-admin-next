@@ -34,7 +34,7 @@
         <el-table-column prop="role" label="权限标识"></el-table-column>
         <el-table-column
           prop="hide"
-          label="是否展示"
+          label="是否隐藏"
           :formatter="formatter"
           width="100"
         ></el-table-column>

@@ -1,4 +1,5 @@
 import asyncRoutes from "@/router/asyncRoutes";
+import curlToParams from "curl-to-params";
 const reg = /\/:[A-Za-z]*/g;
 export const matchRoutes = role => {
   let len = role.length;
@@ -117,4 +118,45 @@ const matchRoutePath = routes => {
     }
     return item;
   });
+};
+
+export const matchMenu = role => {
+  return role
+    .filter(item => {
+      return item.hide === "NO";
+    })
+    .map(item => {
+      item.children =
+        item.children.length > 0
+          ? item.children
+              .filter(child => {
+                return child.hide === "NO";
+              })
+              .map(child => {
+                return {
+                  name: child.name,
+                  pageRoute: curlProtocol(child.pageRoute),
+                  role: child.role
+                };
+              })
+          : [];
+      return item;
+    });
+};
+
+const curlProtocol = path => {
+  if (path.startsWith("route://")) {
+    path = path.replace("route://", "curl ");
+    const code = curlToParams(path);
+    let params = JSON.parse(code);
+    if (params.static == "true") {
+      return "/" + params.url;
+    } else if (params.dynamic == "true") {
+      return "/generate/page/" + params.url;
+    } else {
+      return params.url;
+    }
+  } else {
+    return "";
+  }
 };
