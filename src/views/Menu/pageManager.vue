@@ -118,6 +118,8 @@
       :visible.sync="visible"
       :show-close="false"
       class="generate-dialog"
+      :destroy-on-close="true"
+      v-if="visible"
     >
       <generate-form
         :id="pageId"

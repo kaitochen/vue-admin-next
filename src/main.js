@@ -15,7 +15,7 @@ Vue.use(MlTabs);
 Vue.use(KeepActive);
 Vue.use(Generator, {
   page: _page,
-  route: _route.bind(Vue),
+  route: _route,
   request: _request,
   http: 444
 });

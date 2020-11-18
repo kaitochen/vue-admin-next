@@ -16,3 +16,13 @@ export const jsonToFormData = json => {
   }
   return formData;
 };
+export const stringToJson = str => {
+  const arr = str.split("&");
+  const obj = {};
+  arr.forEach(item => {
+    const key = item.split("=")[0];
+    const value = item.split("=")[1];
+    obj[key] = value;
+  });
+  return obj;
+};

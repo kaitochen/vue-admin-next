@@ -42,7 +42,7 @@ export const baseRoutes = [
     component: layout,
     children: [
       {
-        path: "page/:type",
+        path: "page/:routeName",
         component: () => import("@/views/generator.vue"),
         name: "Generator"
       }
