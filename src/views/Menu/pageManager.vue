@@ -374,6 +374,10 @@ export default {
         pageId: this.pageId
       }).then(res => {
         console.log(res);
+        if (res.code === 200) {
+          this.$message.success("保存成功");
+          this.closeDialog();
+        }
       });
       // savePageConfig(data).then(res => {
       //   console.log(res);

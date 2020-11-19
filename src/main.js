@@ -9,15 +9,21 @@ import KeepActive from "vue-keep-active";
 import "./router/permission";
 import "./element.scss";
 import { _page, _request, _route } from "@/util/util.js";
+import { aliUpload } from "@/util/upload.js";
 Vue.config.productionTip = false;
 Vue.use(elementUI, { size: "small" });
 Vue.use(MlTabs);
 Vue.use(KeepActive);
 Vue.use(Generator, {
-  page: _page,
-  route: _route,
-  request: _request,
-  http: 444
+  navigator: {
+    page: _page,
+    route: _route,
+    request: _request,
+    http: 444
+  },
+  upload: {
+    ali: aliUpload
+  }
 });
 import "./api/mock";
 new Vue({

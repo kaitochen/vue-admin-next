@@ -8,8 +8,7 @@ export const _page = params => {
   });
 };
 
-export const _request = (_this, params) => {
-  console.log(_this);
+export const _request = (_this, params, cb) => {
   if (params.alert) {
     return _this
       .$confirm(params.alert, "提示", {
@@ -22,6 +21,21 @@ export const _request = (_this, params) => {
         request({
           ..._params,
           data: body
+        }).then(res => {
+          if (res.code === 200) {
+            console.log();
+            cb && cb(res);
+            if (params.refresh) {
+              _this.refresh();
+            }
+            if (params.success) {
+              _this.$message.success(params.success);
+            }
+          } else {
+            if (params.fail) {
+              _this.$message.error(params.fail);
+            }
+          }
         });
       })
       .catch(() => {
@@ -35,6 +49,26 @@ export const _request = (_this, params) => {
     return request({
       ..._params,
       data: body
+    }).then(res => {
+      if (res.code === 200) {
+        cb && cb(res);
+        if (params.close) {
+          _this.closeDialog(_this.dialogKey());
+        }
+        if (params.refresh) {
+          _this.refresh();
+        }
+        if (params.success) {
+          _this.$message.success(params.success);
+        }
+        if (params.back) {
+          _this.$router.go(-1);
+        }
+      } else {
+        if (params.fail) {
+          _this.$message.error(params.fail);
+        }
+      }
     });
   }
 };

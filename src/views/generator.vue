@@ -5,17 +5,19 @@
       :dragData="pageConfig"
       @search="search"
     ></generate-view>
-    <template v-for="(item, index) in dialogArr">
+    <template v-for="item in dialogArr">
       <el-dialog
-        :key="index"
+        :key="item.key"
         :title="item.title"
         :visible.sync="item.visible"
         width="1000px"
-        :destroy-on-close="true"
+        :destroy-on-close="false"
         :close-on-click-modal="false"
         class="page-dialog"
       >
         <generator
+          v-if="item.visible"
+          :mdKey="item.key"
           :routeName="item.url"
           :query="item.query"
           type="dialog"
@@ -25,6 +27,7 @@
   </div>
 </template>
 <script>
+import md5 from "md5";
 import { getPageInfo } from "@/api/role";
 import GenerateView from "admin-page-generator/components/GenerateView";
 import { configToData } from "admin-page-generator/util/transform";
@@ -53,6 +56,10 @@ export default {
     query: {
       type: Object,
       default: () => {}
+    },
+    mdKey: {
+      type: String,
+      default: ""
     }
   },
   data() {
@@ -73,6 +80,9 @@ export default {
   computed: {
     userRole() {
       return this.$store.state.permission.role;
+    },
+    dialogMd5() {
+      return this.dialogArr.map(item => item.key);
     }
   },
   provide() {
@@ -93,6 +103,17 @@ export default {
       insertDialog: config => {
         this.insertDialog(config);
         return false;
+      },
+      closeDialog: key => {
+        this._closeDialog(key);
+        return false;
+      },
+      dialogKey: () => {
+        return this.mdKey;
+      },
+      refresh: () => {
+        this._refresh();
+        return false;
       }
     };
   },
@@ -100,18 +121,25 @@ export default {
     getConfig(type) {
       getPageInfo(type).then(res => {
         if (res.code === 200) {
-          console.log(res);
-          const { content } = res.data;
-          const { page, config } = JSON.parse(content);
-          this.pageConfig.columns = page;
-          this.pageContext = config.context;
-          this.pageData = configToData(page[0]);
-          this.pageType = page[0].type;
-          if (this.pageContext) {
-            this.search();
+          try {
+            const { content } = res.data;
+            const { page, config } = JSON.parse(content);
+            this.pageConfig.columns = page;
+            this.pageContext = config.context;
+            this.pageData = configToData(page[0]);
+            this.pageType = page[0].type;
+            if (this.pageContext) {
+              this.search();
+            }
+          } catch (e) {
+            console.error(e);
           }
         }
       });
+    },
+    _refresh() {
+      let _this = this.$parent.$parent;
+      _this.search();
     },
     getData(index, size) {
       const _request = protocolConverter(
@@ -157,16 +185,29 @@ export default {
       this.getData(index, size);
     },
     insertDialog(config) {
-      console.log(config);
-      this.dialogArr.push({
-        ...config,
-        query: config.body ? stringToJson(config.body) : {},
-        visible: true
-      });
+      const fullPath = config.url + "?" + config.body;
+      const _md5 = md5(fullPath);
+      const index = this.dialogMd5.indexOf(_md5);
+      if (index >= 0) {
+        this.dialogArr[index].visible = true;
+      } else {
+        this.dialogArr.push({
+          ...config,
+          query: config.body ? stringToJson(config.body) : {},
+          visible: true,
+          key: _md5
+        });
+      }
+    },
+    _closeDialog(key) {
+      let _this = this.$parent.$parent;
+      const index = _this.dialogMd5.indexOf(key);
+      if (index >= 0) {
+        _this.dialogArr[index].visible = false;
+      }
     }
   },
   mounted() {
-    console.log(this.type);
     if (this.type === "dialog") {
       const routeName = this.routeName;
       const query = this.query;

@@ -6,7 +6,7 @@ export const jsonToFormData = json => {
   for (let k in json) {
     let value;
     if (json[k] instanceof Array) {
-      value = json[k];
+      value = JSON.stringify(json[k]);
     } else if (json[k] instanceof Object) {
       value = JSON.stringify(json[k]);
     } else {
