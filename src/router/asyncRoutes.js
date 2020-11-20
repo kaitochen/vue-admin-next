@@ -17,11 +17,6 @@ const asyncRoutes = [
         component: () => import("@/views/Menu/pageManager")
       }
     ]
-  },
-  {
-    path: "/generator",
-    name: "Generator-form",
-    component: () => import("@/views/Generator/generator.vue")
   }
 ];
 export default asyncRoutes;

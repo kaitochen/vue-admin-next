@@ -21,9 +21,7 @@ Vue.use(Generator, {
     request: _request,
     http: 444
   },
-  upload: {
-    ali: aliUpload
-  }
+  upload: aliUpload
 });
 import "./api/mock";
 new Vue({

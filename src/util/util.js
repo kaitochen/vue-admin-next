@@ -45,31 +45,32 @@ export const _request = (_this, params, cb) => {
         });
       });
   } else {
-    let { body = {}, ..._params } = params;
-    return request({
-      ..._params,
-      data: body
-    }).then(res => {
-      if (res.code === 200) {
-        cb && cb(res);
-        if (params.close) {
-          _this.closeDialog(_this.dialogKey());
-        }
-        if (params.refresh) {
-          _this.refresh();
-        }
-        if (params.success) {
-          _this.$message.success(params.success);
-        }
-        if (params.back) {
-          _this.$router.go(-1);
-        }
-      } else {
-        if (params.fail) {
-          _this.$message.error(params.fail);
-        }
-      }
-    });
+    // let { body = {}, ..._params } = params;
+    return Promise.resolve();
+    // return request({
+    //   ..._params,
+    //   data: body
+    // }).then(res => {
+    //   if (res.code === 200) {
+    //     cb && cb(res);
+    //     if (params.close) {
+    //       _this.closeDialog(_this.dialogKey());
+    //     }
+    //     if (params.refresh) {
+    //       _this.refresh();
+    //     }
+    //     if (params.success) {
+    //       _this.$message.success(params.success);
+    //     }
+    //     if (params.back) {
+    //       _this.$router.go(-1);
+    //     }
+    //   } else {
+    //     if (params.fail) {
+    //       _this.$message.error(params.fail);
+    //     }
+    //   }
+    // });
   }
 };
 

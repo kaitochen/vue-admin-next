@@ -30,8 +30,8 @@
 import md5 from "md5";
 import { getPageInfo } from "@/api/role";
 import GenerateView from "admin-page-generator/components/GenerateView";
-import { configToData } from "admin-page-generator/util/transform";
-import generator from "@/views/Generator/generator";
+import { configToData, dataToJson } from "admin-page-generator/util/transform";
+import generator from "@/views/generator";
 import {
   protocolMatchData,
   protocolConverter
@@ -171,7 +171,10 @@ export default {
               this.pageSize = res.data.pageSize;
               this.pageTotal = res.data.total;
             } else if (this.pageType === "form") {
-              this.pageData = res.data;
+              this.pageData = Object.assign(
+                this.pageData,
+                dataToJson(res.data)
+              );
             }
           }
         })
