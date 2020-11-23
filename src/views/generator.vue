@@ -138,7 +138,12 @@ export default {
       });
     },
     _refresh() {
-      let _this = this.$parent.$parent;
+      let _this;
+      if (this.type === "dialog" && this.pageType === "form") {
+        _this = this.$parent.$parent;
+      } else {
+        _this = this;
+      }
       _this.search();
     },
     getData(index, size) {

@@ -147,11 +147,10 @@ export const matchMenu = role => {
 const curlProtocol = path => {
   if (path.startsWith("route://")) {
     path = path.replace("route://", "curl ");
-    const code = curlToParams(path);
-    let params = JSON.parse(code);
-    if (params.static == "true") {
+    let params = curlToParams(path);
+    if (params.static) {
       return "/" + params.url;
-    } else if (params.dynamic == "true") {
+    } else if (params.dynamic) {
       return "/generate/page/" + params.url;
     } else {
       return params.url;
