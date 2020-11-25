@@ -1,9 +1,5 @@
 import { baseRoutes } from "../../router";
-import {
-  matchRoleToRouter,
-  matchRoleToMenu,
-  getAllRole
-} from "../../util/auth";
+import { matchRoleToMenu, getAllRole } from "../../util/auth";
 const state = {
   routes: [],
   menu: [],
@@ -22,9 +18,9 @@ const mutations = {
   }
 };
 const actions = {
-  generateRoutes({ commit }, role) {
+  generateRoutes({ commit }, routes) {
     return new Promise(resolve => {
-      let routes = matchRoleToRouter(role);
+      // let routes = matchRoleToRouter(role);
       commit("SET_ROUTES", routes);
       resolve(routes);
     });

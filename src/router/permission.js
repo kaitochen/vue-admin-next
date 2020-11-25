@@ -33,6 +33,7 @@ router.beforeEach(async (to, from, next) => {
           try {
             await store.dispatch("permission/generateRole", data);
             await store.dispatch("permission/generateMenu", data);
+            store.dispatch("permission/generateRoutes", asyncRoutes);
           } catch (e) {
             console.log(e);
           }

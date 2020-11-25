@@ -66,6 +66,7 @@ export default {
 
     initTab() {
       let affixRoutes = this.filterAffixRoutes(this.routes);
+      console.log(this.routes, affixRoutes);
       if (affixRoutes.length > 0) {
         this.$store.dispatch("routeTab/initTabRoutes", affixRoutes);
       }

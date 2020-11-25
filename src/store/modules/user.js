@@ -2,9 +2,7 @@ import { getToken, clearToken, setToken } from "../../util/auth";
 import { login, getRole } from "@/api/user";
 const state = {
   token: getToken(),
-  roles: [],
-  org: null,
-  userInfo: null
+  roles: []
 };
 const mutations = {
   SET_TOKEN: (state, token) => {
@@ -16,15 +14,8 @@ const mutations = {
   SET_ROLE: (state, role) => {
     state.roles = role;
   },
-  //选择机构
-  SET_ORG: (state, org) => {
-    state.org = org;
-  },
   REMOVE_ROLE: state => {
     state.roles = [];
-  },
-  SET_USER_INFO: (state, userInfo) => {
-    state.userInfo = userInfo;
   }
 };
 
