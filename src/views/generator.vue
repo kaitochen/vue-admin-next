@@ -67,14 +67,15 @@ export default {
       pageConfig: {
         columns: []
       },
-      pageContext: null,
+      pageContextUrl: null,
       pageData: {},
       routeContext: {},
       pageSize: 10,
       pageIndex: 1,
       pageTotal: 0,
       pageType: "",
-      dialogArr: []
+      dialogArr: [],
+      pageContext: {}
     };
   },
   computed: {
@@ -114,6 +115,19 @@ export default {
       refresh: () => {
         this._refresh();
         return false;
+      },
+      pageContext: () => {
+        return this.pageContext;
+      },
+      setPageContext: obj => {
+        this._setPageContext(obj);
+        return false;
+      },
+      routeContext: () => {
+        return this.routeContext;
+      },
+      globalRole: () => {
+        return this.userRole;
       }
     };
   },
@@ -125,10 +139,10 @@ export default {
             const { content } = res.data;
             const { page, config } = JSON.parse(content);
             this.pageConfig.columns = page;
-            this.pageContext = config.context;
+            this.pageContextUrl = config.context;
             this.pageData = configToData(page[0]);
             this.pageType = page[0].type;
-            if (this.pageContext) {
+            if (this.pageContextUrl) {
               this.search();
             }
           } catch (e) {
@@ -149,7 +163,7 @@ export default {
     getData(index, size) {
       const _request = protocolConverter(
         protocolMatchData(
-          this.pageContext,
+          this.pageContextUrl,
           [this.pageData, this.routeContext],
           ""
         )
@@ -213,6 +227,9 @@ export default {
       if (index >= 0) {
         _this.dialogArr[index].visible = false;
       }
+    },
+    _setPageContext(obj) {
+      this.pageContext = Object.assign(this.pageContext, obj);
     }
   },
   mounted() {
