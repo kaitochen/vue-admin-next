@@ -24,11 +24,22 @@ export const _request = (_this, params, cb) => {
         };
         if (method === "get" || method === "GET") {
           requestParam.params = body;
+          const _urlArr = requestParam.url.split("?");
+          if (_urlArr.length === 2) {
+            const query = _urlArr[1];
+            requestParam.url = _urlArr[0];
+            requestParam.params = [query, requestParam.params].join("&");
+          }
+          requestParam.url += "?" + requestParam.params;
+          delete requestParam.params;
         } else {
           if (type === "formData") {
             requestParam.data = jsonToFormData(body);
           } else {
             requestParam.data = body;
+            requestParam.headers = {
+              "content-type": "application/x-www-form-urlencoded"
+            };
           }
         }
         request(requestParam).then(res => {
@@ -67,11 +78,22 @@ export const _request = (_this, params, cb) => {
     };
     if (method === "get" || method === "GET") {
       requestParam.params = body;
+      const _urlArr = requestParam.url.split("?");
+      if (_urlArr.length === 2) {
+        const query = _urlArr[1];
+        requestParam.url = _urlArr[0];
+        requestParam.params = [query, requestParam.params].join("&");
+      }
+      requestParam.url += "?" + requestParam.params;
+      delete requestParam.params;
     } else {
       if (type === "formData") {
         requestParam.data = jsonToFormData(body);
       } else {
         requestParam.data = body;
+        requestParam.headers = {
+          "content-type": "application/x-www-form-urlencoded"
+        };
       }
     }
     // return Promise.resolve();

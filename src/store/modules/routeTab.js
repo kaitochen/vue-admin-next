@@ -51,7 +51,7 @@ const actions = {
         query: { ...route.query },
         params: { ...route.params }
       });
-      dispatch("deleteExcludeRoute", route.path);
+      dispatch("addExcludeRoute", route.path);
     }
     commit("SET_ACTIVE_ROUTE", route);
   },
@@ -80,7 +80,7 @@ const actions = {
         return;
       }
       commit("DELETE_ROUTE", tabName);
-      dispatch("addExcludeRoute", tabName);
+      dispatch("deleteExcludeRoute", tabName);
       if (tabName !== state.activeRoute.path) {
         commit("DELETE_TAB_ROUTE", matchedRouteIndex);
         return;

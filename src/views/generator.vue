@@ -174,12 +174,27 @@ export default {
       };
       if (_request.data.method === "GET") {
         params.params = _request.data.body;
-        if (this.pageType === "list") {
-          params.params["pageSize"] = size;
-          params.params["pageIndex"] = index;
+        const _urlArr = params.url.split("?");
+        if (_urlArr.length === 2) {
+          const query = _urlArr[1];
+          params.url = _urlArr[0];
+          params.params = [query, params.params].join("&");
         }
+        if (this.pageType === "list") {
+          params.params = [
+            params.params,
+            `pageSize=${size}&pageIndex=${index}`
+          ].join("&");
+          // params.params["pageSize"] = size;
+          // params.params["pageIndex"] = index;
+        }
+        params.url += "?" + params.params;
+        delete params.params;
       } else {
         params.data = _request.data.body;
+        params.headers = {
+          "content-type": "application/x-www-form-urlencoded"
+        };
       }
       request(params)
         .then(res => {

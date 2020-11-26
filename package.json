@@ -8,12 +8,12 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
-    "admin-page-generator": "^0.1.8",
+    "admin-page-generator": "^0.1.10",
     "ali-oss": "^6.11.2",
     "axios": "^0.20.0",
     "babel-polyfill": "^6.26.0",
-    "core-js": "^3.7.0",
-    "curl-to-params": "^0.1.11",
+    "core-js": "^3.8.0",
+    "curl-to-params": "^0.1.12",
     "element-tabs": "^0.1.0",
     "element-ui": "^2.14.1",
     "md5": "^2.3.0",
@@ -22,7 +22,7 @@
     "vue": "^2.6.11",
     "vue-keep-active": "^0.1.1",
     "vue-router": "^3.4.9",
-    "vuex": "^3.4.0"
+    "vuex": "^3.6.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.5.9",
