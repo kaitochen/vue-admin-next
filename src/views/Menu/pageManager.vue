@@ -276,6 +276,8 @@ export default {
                 if (res.code === 200) {
                   this.$message.success("删除组成功！");
                   this.getPageList();
+                } else {
+                  this.$message.error(res.msg);
                 }
               });
             })
@@ -292,6 +294,8 @@ export default {
                 if (res.code === 200) {
                   this.$message.success("删除页面成功！");
                   this.getPageList();
+                } else {
+                  this.$message.error(res.msg);
                 }
               });
             })
@@ -310,6 +314,8 @@ export default {
                   this.$message.success("新增组成功！");
                   this.dialogVisible = false;
                   this.getPageList();
+                } else {
+                  this.$message.error(res.msg);
                 }
               });
               break;
@@ -319,6 +325,8 @@ export default {
                   this.$message.success("编辑组成功！");
                   this.dialogVisible = false;
                   this.getPageList();
+                } else {
+                  this.$message.error(res.msg);
                 }
               });
               break;
@@ -328,6 +336,8 @@ export default {
                   this.$message.success("新增页面成功！");
                   this.dialogVisible = false;
                   this.getPageList();
+                } else {
+                  this.$message.error(res.msg);
                 }
               });
               break;
@@ -337,6 +347,8 @@ export default {
                   this.$message.success("编辑页面成功！");
                   this.dialogVisible = false;
                   this.getPageList();
+                } else {
+                  this.$message.error(res.msg);
                 }
               });
               break;
@@ -355,6 +367,8 @@ export default {
       getPageList().then(res => {
         if (res.code === 200) {
           this.list = res.data;
+        } else {
+          this.$message.error(res.msg);
         }
       });
     },
@@ -365,6 +379,8 @@ export default {
       importPageConfig().then(res => {
         if (res.code === 200) {
           fn(res.data.page, res.data.config);
+        } else {
+          this.$message.error(res.msg);
         }
       });
     },
@@ -377,6 +393,8 @@ export default {
         if (res.code === 200) {
           this.$message.success("保存成功");
           this.closeDialog();
+        } else {
+          this.$message.error(res.msg);
         }
       });
       // savePageConfig(data).then(res => {
@@ -395,6 +413,8 @@ export default {
       pageHistoryDetail(id).then(res => {
         if (res.code === 200) {
           params.callback(res.data);
+        } else {
+          this.$message.error(res.msg);
         }
       });
     },
@@ -404,6 +424,8 @@ export default {
       deleteHistory(id).then(res => {
         if (res.code === 200) {
           params.callback(res.data);
+        } else {
+          this.$message.error(res.msg);
         }
       });
     }

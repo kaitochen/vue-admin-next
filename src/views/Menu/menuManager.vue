@@ -386,6 +386,8 @@ export default {
                 if (res.code === 200) {
                   this.$message.success("删除菜单成功！");
                   this.getMenuList();
+                } else {
+                  this.$message.error(res.msg);
                 }
               });
             })
@@ -402,6 +404,8 @@ export default {
                 if (res.code === 200) {
                   this.$message.success("删除子菜单成功！");
                   this.getMenuList();
+                } else {
+                  this.$message.error(res.msg);
                 }
               });
             })
@@ -418,6 +422,8 @@ export default {
                 if (res.code === 200) {
                   this.$message.success("删除操作成功！");
                   this.getMenuList();
+                } else {
+                  this.$message.error(res.msg);
                 }
               });
             })
@@ -436,6 +442,8 @@ export default {
                   this.$message.success("新增菜单成功！");
                   this.dialogVisible = false;
                   this.getMenuList();
+                } else {
+                  this.$message.error(res.msg);
                 }
               });
               break;
@@ -445,6 +453,8 @@ export default {
                   this.$message.success("编辑菜单成功！");
                   this.dialogVisible = false;
                   this.getMenuList();
+                } else {
+                  this.$message.error(res.msg);
                 }
               });
               break;
@@ -454,6 +464,8 @@ export default {
                   this.$message.success("新增子菜单成功！");
                   this.dialogVisible = false;
                   this.getMenuList();
+                } else {
+                  this.$message.error(res.msg);
                 }
               });
               break;
@@ -463,6 +475,8 @@ export default {
                   this.$message.success("编辑子菜单成功！");
                   this.dialogVisible = false;
                   this.getMenuList();
+                } else {
+                  this.$message.error(res.msg);
                 }
               });
               break;
@@ -472,6 +486,8 @@ export default {
                   this.$message.success("新增操作成功！");
                   this.dialogVisible = false;
                   this.getMenuList();
+                } else {
+                  this.$message.error(res.msg);
                 }
               });
               break;
@@ -481,6 +497,8 @@ export default {
                   this.$message.success("编辑操作成功！");
                   this.dialogVisible = false;
                   this.getMenuList();
+                } else {
+                  this.$message.error(res.msg);
                 }
               });
               break;
