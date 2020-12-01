@@ -142,7 +142,7 @@ export default {
             this.pageContextUrl = config.context;
             this.pageData = configToData(page[0]);
             this.pageType = page[0].type;
-            if (this.pageContextUrl) {
+            if (this.pageContextUrl && this.pageContextUrl.length > 0) {
               this.search();
             }
           } catch (e) {
@@ -161,60 +161,94 @@ export default {
       _this.search();
     },
     getData(index, size) {
-      const _request = protocolConverter(
-        protocolMatchData(
-          this.pageContextUrl,
-          [this.pageData, this.routeContext],
-          ""
-        )
-      );
-      let params = {
-        url: _request.data.url,
-        method: _request.data.method
-      };
-      if (_request.data.method === "GET") {
-        params.params = _request.data.body;
-        const _urlArr = params.url.split("?");
-        if (_urlArr.length === 2) {
-          const query = _urlArr[1];
-          params.url = _urlArr[0];
-          params.params = [query, params.params].join("&");
-        }
-        if (this.pageType === "list") {
-          params.params = [
-            params.params,
-            `pageSize=${size}&pageIndex=${index}`
-          ].join("&");
-          // params.params["pageSize"] = size;
-          // params.params["pageIndex"] = index;
-        }
-        params.url += "?" + params.params;
-        delete params.params;
-      } else {
-        params.data = _request.data.body;
-        params.headers = {
-          "content-type": "application/x-www-form-urlencoded"
+      console.log(this.pageContextUrl);
+      for (let i = 0; i < this.pageContextUrl.length; i++) {
+        const pageContextUrl = this.pageContextUrl[i];
+        const _request = protocolConverter(
+          protocolMatchData(
+            pageContextUrl,
+            [this.pageData, this.routeContext],
+            ""
+          )
+        );
+        console.log(_request);
+        let params = {
+          url: _request.data.url,
+          method: _request.data.method
         };
-      }
-      request(params)
-        .then(res => {
-          if (res.code === 200) {
-            if (this.pageType === "list") {
-              this.pageData.table = res.data.list;
-              this.pageIndex = res.data.pageIndex;
-              this.pageSize = res.data.pageSize;
-              this.pageTotal = res.data.total;
-            } else if (this.pageType === "form") {
-              this.pageData = Object.assign(
-                this.pageData,
-                dataToJson(res.data)
-              );
-            }
+        if (_request.data.method === "GET") {
+          params.params = _request.data.body;
+          const _urlArr = params.url.split("?");
+          if (_urlArr.length === 2) {
+            const query = _urlArr[1];
+            params.url = _urlArr[0];
+            params.params = [query, params.params].join("&");
           }
-        })
-        .catch(err => {
-          console.log(err);
-        });
+          if (this.pageType === "list") {
+            params.params = [
+              params.params,
+              `pageSize=${size}&pageIndex=${index}`
+            ].join("&");
+            // params.params["pageSize"] = size;
+            // params.params["pageIndex"] = index;
+          }
+          params.url += "?" + params.params;
+          delete params.params;
+        } else {
+          params.data = _request.data.body;
+          params.headers = {
+            "content-type": "application/x-www-form-urlencoded"
+          };
+        }
+        request(params)
+          .then(res => {
+            if (res.code === 200) {
+              let _context = _request.data.context;
+              let __params = {};
+              if (_context) {
+                let _p = _context.split("&");
+                if (_p.length > 0) {
+                  _p.forEach(item => {
+                    let key = item.split("=")[0];
+                    let value = item.split("=")[1];
+                    let _value = value.split(".");
+                    value = res;
+                    _value.forEach(v => {
+                      value = value[v];
+                    });
+                    console.log(key, value);
+                    __params[key] = value;
+                  });
+                }
+              }
+              if (this.pageType === "list") {
+                this.pageData = Object.assign(this.pageData, __params);
+                if (__params.pageIndex) {
+                  this.pageIndex = params.pageIndex;
+                }
+                if (__params.pageSize) {
+                  this.pageSize = params.pageSize;
+                }
+                if (__params.total) {
+                  this.total = params.total;
+                }
+                // this.pageData.table = res.data.list;
+                // this.pageIndex = res.data.pageIndex;
+                // this.pageSize = res.data.pageSize;
+                // this.pageTotal = res.data.total;
+              } else if (this.pageType === "form") {
+                this.pageData = Object.assign(
+                  this.pageData,
+                  __params,
+                  dataToJson(res.data)
+                );
+              }
+            }
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     },
     search(index = this.pageIndex, size = this.pageSize) {
       this.pageIndex = index;

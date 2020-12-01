@@ -8,7 +8,7 @@ import MlTabs from "element-tabs";
 import KeepActive from "vue-keep-active";
 import "./router/permission";
 import "./element.scss";
-import { _page, _request, _route } from "@/util/util.js";
+import { _page, _request, _route, _http } from "@/util/util.js";
 import { aliUpload } from "@/util/upload.js";
 Vue.config.productionTip = false;
 Vue.use(elementUI, { size: "small" });
@@ -19,7 +19,7 @@ Vue.use(Generator, {
     page: _page,
     route: _route,
     request: _request,
-    http: 444
+    http: _http
   },
   upload: aliUpload
 });

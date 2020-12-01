@@ -142,3 +142,6 @@ export const _route = (_this, params) => {
     }
   }
 };
+export const _http = (_this, params) => {
+  window.open(params.url, "_target");
+};
