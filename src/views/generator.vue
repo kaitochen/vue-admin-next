@@ -216,7 +216,6 @@ export default {
                     _value.forEach(v => {
                       value = value[v];
                     });
-                    console.log(key, value);
                     __params[key] = value;
                   });
                 }
@@ -224,13 +223,13 @@ export default {
               if (this.pageType === "list") {
                 this.pageData = Object.assign(this.pageData, __params);
                 if (__params.pageIndex) {
-                  this.pageIndex = params.pageIndex;
+                  this.pageIndex = __params.pageIndex;
                 }
                 if (__params.pageSize) {
-                  this.pageSize = params.pageSize;
+                  this.pageSize = __params.pageSize;
                 }
                 if (__params.total) {
-                  this.total = params.total;
+                  this.total = __params.total;
                 }
                 // this.pageData.table = res.data.list;
                 // this.pageIndex = res.data.pageIndex;
