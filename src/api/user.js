@@ -1,9 +1,10 @@
 import Request from "../util/request";
+import { jsonToFormData } from "../util/operation";
 export const login = data => {
   return Request({
     url: "/admin/v1/login",
     method: "POST",
-    data
+    data: jsonToFormData(data)
   });
 };
 export const getRole = () => {
@@ -32,7 +33,7 @@ export const addRole = data => {
   return Request({
     url: "/admin/access/v1/sys-role",
     method: "PUT",
-    data: data
+    data: jsonToFormData(data)
   });
 };
 //获取后台用户信息
@@ -46,7 +47,7 @@ export const editRole = (id, data) => {
   return Request({
     url: `/admin/access/v1/sys-role/${id}`,
     method: "POST",
-    data: data
+    data: jsonToFormData(data)
   });
 };
 export const getRoleData = id => {
@@ -72,14 +73,14 @@ export const addUser = data => {
   return Request({
     url: "/admin/access/v1/sys-user",
     method: "PUT",
-    data: data
+    data: jsonToFormData(data)
   });
 };
 export const editUser = (id, data) => {
   return Request({
     url: "/admin/access/v1/sys-user/" + id,
     method: "POST",
-    data: data
+    data: jsonToFormData(data)
   });
 };
 export const getUserData = id => {
@@ -99,7 +100,7 @@ export const editUserPassword = (id, data) => {
   return Request({
     url: `/admin/access/v1/sys-user/${id}/password`,
     method: "POST",
-    data: data
+    data: jsonToFormData(data)
   });
 };
 //获取工作台信息
@@ -118,7 +119,7 @@ export const addApp = data => {
   return Request({
     url: "/admin/access/v1/user/member/add",
     method: "PUT",
-    data
+    data: jsonToFormData(data)
   });
 };
 
