@@ -229,7 +229,7 @@ export default {
                   this.pageSize = __params.pageSize;
                 }
                 if (__params.total) {
-                  this.total = __params.total;
+                  this.pageTotal = __params.total;
                 }
                 // this.pageData.table = res.data.list;
                 // this.pageIndex = res.data.pageIndex;
