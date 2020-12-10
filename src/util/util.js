@@ -45,12 +45,17 @@ export const _request = (_this, params, cb) => {
         request(requestParam).then(res => {
           if (res.code === 200) {
             cb && cb(res);
-            console.log(_this.refresh, _this);
+            if (params.close) {
+              _this.closeDialog(_this.dialogKey());
+            }
             if (params.refresh) {
               _this.refresh();
             }
             if (params.success) {
               _this.$message.success(params.success);
+            }
+            if (params.back) {
+              _this.$router.go(-1);
             }
           } else {
             if (params.fail) {
@@ -62,9 +67,6 @@ export const _request = (_this, params, cb) => {
         });
       })
       .catch(() => {
-        if (params.refresh) {
-          _this.refresh();
-        }
         _this.$message({
           type: "info",
           message: "已取消操作"
