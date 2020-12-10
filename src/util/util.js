@@ -84,7 +84,9 @@ export const _request = (_this, params, cb) => {
         requestParam.url = _urlArr[0];
         requestParam.params = [query, requestParam.params].join("&");
       }
-      requestParam.url += "?" + requestParam.params;
+      if (typeof requestParam.params === "string") {
+        requestParam.url += "?" + requestParam.params;
+      }
       delete requestParam.params;
     } else {
       if (type === "formData") {
