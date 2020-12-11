@@ -1,9 +1,18 @@
 import axios from "axios";
 import { Loading } from "element-ui";
-let request = axios.create({
-  baseURL: "https://dev.api.beiru168.com/framework"
-  // baseURL: "http://192.168.2.15:8080"
-});
+const local = localStorage.getItem("local");
+let request = null;
+if (local === "true") {
+  request = axios.create({
+    // baseURL: "https://dev.api.beiru168.com/framework"
+    baseURL: "http://localhost:8080"
+  });
+} else {
+  request = axios.create({
+    baseURL: "https://dev.api.beiru168.com/framework"
+    // baseURL: "http://192.168.2.15:8080"
+  });
+}
 
 // request.defaults.baseURL = _domain;
 let loading;

@@ -6,7 +6,7 @@ import "nprogress/nprogress.css"; // progress bar style
 import { hadToken } from "../util/auth";
 import asyncRoutes from "@/router/asyncRoutes";
 NProgress.configure({ showSpinner: false }); // NProgress Configuration
-const whiteList = ["/login"]; // no redirect whitelist
+const whiteList = ["/login", "/setting"]; // no redirect whitelist
 router.beforeEach(async (to, from, next) => {
   // start progress bar
   NProgress.start();

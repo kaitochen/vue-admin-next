@@ -1,6 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import login from "../layout/login.vue";
+import setting from "@/views/setting";
 import layout from "../layout/index";
 import store from "../store/index";
 const VueRouterPush = VueRouter.prototype.push;
@@ -15,6 +16,12 @@ export const baseRoutes = [
     path: "/login",
     name: "Login",
     component: login,
+    hidden: true
+  },
+  {
+    path: "/setting",
+    name: "Setting",
+    component: setting,
     hidden: true
   },
   {
