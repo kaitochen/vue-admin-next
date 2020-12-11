@@ -8,9 +8,9 @@
     >
       <template v-for="item in tabRoute">
         <ml-tab-pane
-          :key="item.path"
+          :key="item.fullPath"
           closable
-          :name="item.path"
+          :name="item.fullPath"
           :label="tabLabel(item)"
         />
       </template>
@@ -38,7 +38,7 @@ export default {
     },
     activeRoute: {
       get: function() {
-        return this.$store.state.routeTab.activeRoute.path;
+        return this.$store.state.routeTab.activeRoute.fullPath;
       },
       set: function(tabName) {
         this.$store
@@ -66,7 +66,6 @@ export default {
 
     initTab() {
       let affixRoutes = this.filterAffixRoutes(this.routes);
-      console.log(this.routes, affixRoutes);
       if (affixRoutes.length > 0) {
         this.$store.dispatch("routeTab/initTabRoutes", affixRoutes);
       }
@@ -95,9 +94,12 @@ export default {
       return tabs;
     },
     tabLabel(item) {
-      if (this._tabRoutes[item.path] && this._tabRoutes[item.path]._params) {
+      if (
+        this._tabRoutes[item.fullPath] &&
+        this._tabRoutes[item.fullPath]._params
+      ) {
         return (
-          this._tabRoutes[item.path]._params.title ||
+          this._tabRoutes[item.fullPath]._params.title ||
           item.meta.title ||
           item.name
         );

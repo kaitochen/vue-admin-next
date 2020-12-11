@@ -26,3 +26,14 @@ export const stringToJson = str => {
   });
   return obj;
 };
+export const queryToString = query => {
+  let str = [];
+  for (const k in query) {
+    str.push(`${k}=${query[k]}`);
+  }
+  if (str.length > 0) {
+    return "?" + str.join("&");
+  } else {
+    return "";
+  }
+};

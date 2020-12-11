@@ -1,3 +1,4 @@
+import { queryToString } from "@/util/operation";
 const state = {
   activeRoute: {},
   visitedRoutes: [],
@@ -27,9 +28,15 @@ const mutations = {
     state.excludeRoutes.splice(routeIndex, 1);
   },
   PUSH_ROUTE: (state, location) => {
-    let { path } = location;
-    if (!state.tabRoutes[path]) {
-      state.tabRoutes[path] = location;
+    let { path, fullPath, query } = location;
+    let _path = "";
+    if (fullPath) {
+      _path = fullPath;
+    } else {
+      _path = path + queryToString(query);
+    }
+    if (!state.tabRoutes[_path]) {
+      state.tabRoutes[_path] = location;
     }
   },
   DELETE_ROUTE: (state, path) => {
@@ -42,7 +49,7 @@ const actions = {
     commit("SET_ACTIVE_ROUTE", routes[0]);
   },
   addTabRoute: ({ state, commit, dispatch }, route) => {
-    if (!state.visitedRoutes.some(v => v.path === route.path)) {
+    if (!state.visitedRoutes.some(v => v.fullPath === route.fullPath)) {
       commit("ADD_TAB_ROUTE", {
         fullPath: route.fullPath,
         path: route.path,
@@ -51,14 +58,14 @@ const actions = {
         query: { ...route.query },
         params: { ...route.params }
       });
-      dispatch("addExcludeRoute", route.path);
+      dispatch("addExcludeRoute", route.fullPath);
     }
     commit("SET_ACTIVE_ROUTE", route);
   },
   setActiveRoute: ({ commit }, tabName) => {
     return new Promise((resolve, reject) => {
       let matchedRoute = state.visitedRoutes.filter(
-        route => route.path === tabName
+        route => route.fullPath === tabName
       );
       if (matchedRoute.length > 0) {
         commit("SET_ACTIVE_ROUTE", matchedRoute[0]);
@@ -72,7 +79,7 @@ const actions = {
     return new Promise(resolve => {
       let matchedRouteIndex = -1;
       state.visitedRoutes.forEach((route, index) => {
-        if (route.path === tabName) {
+        if (route.fullPath === tabName) {
           matchedRouteIndex = index;
         }
       });

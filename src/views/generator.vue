@@ -280,6 +280,17 @@ export default {
       this.pageContext = Object.assign(this.pageContext, obj);
     }
   },
+  activated() {
+    const len = this.pageConfig.columns.length;
+    if (
+      this.type === "page" &&
+      len > 0 &&
+      this.pageConfig.columns[0].type === "list"
+    ) {
+      console.log("activated search");
+      this.search();
+    }
+  },
   mounted() {
     if (this.type === "dialog") {
       const routeName = this.routeName;
