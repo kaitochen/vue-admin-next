@@ -29,6 +29,7 @@ const mutations = {
   },
   PUSH_ROUTE: (state, location) => {
     let { path, fullPath, query } = location;
+    console.log(location);
     let _path = "";
     if (fullPath) {
       _path = fullPath;
@@ -88,7 +89,7 @@ const actions = {
       }
       commit("DELETE_ROUTE", tabName);
       dispatch("deleteExcludeRoute", tabName);
-      if (tabName !== state.activeRoute.path) {
+      if (tabName !== state.activeRoute.fullPath) {
         commit("DELETE_TAB_ROUTE", matchedRouteIndex);
         return;
       }
