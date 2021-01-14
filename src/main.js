@@ -9,7 +9,7 @@ import KeepActive from "vue-keep-active";
 import "./router/permission";
 import "./element.scss";
 import { _page, _request, _route, _http } from "@/util/util.js";
-import { aliUpload } from "@/util/upload.js";
+import { _serverUpload } from "@/util/upload.js";
 Vue.config.productionTip = false;
 Vue.use(elementUI, { size: "small" });
 Vue.use(MlTabs);
@@ -21,7 +21,7 @@ Vue.use(Generator, {
     request: _request,
     http: _http
   },
-  upload: aliUpload
+  upload: _serverUpload
 });
 import "./api/mock";
 new Vue({

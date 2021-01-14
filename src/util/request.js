@@ -9,7 +9,7 @@ if (local === "true") {
   });
 } else {
   request = axios.create({
-    baseURL: "https://dev.api.beiru168.com/framework"
+    baseURL: "https://dev.api.beiru168.com/garen"
     // baseURL: "http://192.168.2.15:8080"
   });
 }

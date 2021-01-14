@@ -1,5 +1,5 @@
 import OSS from "ali-oss";
-import { getUuid, getAliUploadSts } from "@/api/upload";
+import { getUuid, getAliUploadSts, serverUpload } from "@/api/upload";
 
 export const aliUpload = file => {
   return new Promise((resolve, reject) => {
@@ -28,5 +28,12 @@ export const aliUpload = file => {
         });
       }
     });
+  });
+};
+export const _serverUpload = file => {
+  const formData = new FormData();
+  formData.append("file", file);
+  return serverUpload(formData).then(res => {
+    return res.data;
   });
 };

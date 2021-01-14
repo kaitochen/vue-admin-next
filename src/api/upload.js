@@ -11,3 +11,11 @@ export const getAliUploadSts = () => {
     method: "GET"
   });
 };
+
+export const serverUpload = data => {
+  return Request({
+    url: "/fs/upload",
+    method: "POST",
+    data: data
+  });
+};

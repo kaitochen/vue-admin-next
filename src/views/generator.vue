@@ -142,9 +142,11 @@ export default {
             this.pageContextUrl = config.context;
             this.pageData = configToData(page[0]);
             this.pageType = page[0].type;
-            if (this.pageContextUrl && this.pageContextUrl.length > 0) {
-              this.search();
-            }
+            this.$nextTick(() => {
+              if (this.pageContextUrl && this.pageContextUrl.length > 0) {
+                this.search();
+              }
+            });
           } catch (e) {
             console.error(e);
           }
