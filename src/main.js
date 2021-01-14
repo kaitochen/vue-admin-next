@@ -23,7 +23,7 @@ Vue.use(Generator, {
   },
   upload: _serverUpload
 });
-import "./api/mock";
+// import "./api/mock";
 new Vue({
   router,
   store,

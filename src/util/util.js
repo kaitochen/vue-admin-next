@@ -42,29 +42,79 @@ export const _request = (_this, params, cb) => {
             };
           }
         }
-        request(requestParam).then(res => {
-          if (res.code === 200) {
-            cb && cb(res);
-            if (params.close) {
-              _this.closeDialog(_this.dialogKey());
-            }
-            if (params.refresh) {
-              _this.refresh();
-            }
-            if (params.success) {
-              _this.$message.success(params.success);
-            }
-            if (params.back) {
-              _this.$router.go(-1);
-            }
-          } else {
-            if (params.fail) {
-              _this.$message.error(params.fail);
-            } else {
-              _this.$message.error(res.msg);
-            }
+        if (params.export) {
+          requestParam.responseType = "blob";
+          try {
+            request(requestParam)
+              .then(res => {
+                if (res.code) {
+                  if (res.code === 200) {
+                    cb && cb(res);
+                    if (params.close) {
+                      _this.closeDialog(_this.dialogKey());
+                    }
+                    if (params.refresh) {
+                      _this.refresh();
+                    }
+                    if (params.success) {
+                      _this.$message.success(params.success);
+                    }
+                    if (params.back) {
+                      _this.$router.go(-1);
+                    }
+                  } else {
+                    if (params.fail) {
+                      _this.$message.error(params.fail);
+                    } else {
+                      _this.$message.error(res.msg);
+                    }
+                  }
+                } else {
+                  try {
+                    let a = document.createElement("a");
+                    let blob = new Blob([res]);
+                    let objectUrl = URL.createObjectURL(blob);
+                    a.setAttribute("href", objectUrl);
+                    a.setAttribute(
+                      "download",
+                      params["export-name"] || "download"
+                    );
+                    a.click();
+                    return;
+                  } catch (e) {
+                    console.log(e);
+                  }
+                }
+              })
+              .catch(() => {});
+          } catch (e) {
+            console.log(e);
           }
-        });
+        } else {
+          request(requestParam).then(res => {
+            if (res.code === 200) {
+              cb && cb(res);
+              if (params.close) {
+                _this.closeDialog(_this.dialogKey());
+              }
+              if (params.refresh) {
+                _this.refresh();
+              }
+              if (params.success) {
+                _this.$message.success(params.success);
+              }
+              if (params.back) {
+                _this.$router.go(-1);
+              }
+            } else {
+              if (params.fail) {
+                _this.$message.error(params.fail);
+              } else {
+                _this.$message.error(res.msg);
+              }
+            }
+          });
+        }
       })
       .catch(() => {
         _this.$message({
@@ -101,29 +151,70 @@ export const _request = (_this, params, cb) => {
       }
     }
     // return Promise.resolve();
-    return request(requestParam).then(res => {
-      if (res.code === 200) {
-        cb && cb(res);
-        if (params.close) {
-          _this.closeDialog(_this.dialogKey());
-        }
-        if (params.refresh) {
-          _this.refresh();
-        }
-        if (params.success) {
-          _this.$message.success(params.success);
-        }
-        if (params.back) {
-          _this.$router.go(-1);
-        }
-      } else {
-        if (params.fail) {
-          _this.$message.error(params.fail);
+    if (params.export) {
+      requestParam.responseType = "blob";
+      return request(requestParam).then(res => {
+        if (res.code) {
+          if (res.code === 200) {
+            cb && cb(res);
+            if (params.close) {
+              _this.closeDialog(_this.dialogKey());
+            }
+            if (params.refresh) {
+              _this.refresh();
+            }
+            if (params.success) {
+              _this.$message.success(params.success);
+            }
+            if (params.back) {
+              _this.$router.go(-1);
+            }
+          } else {
+            if (params.fail) {
+              _this.$message.error(params.fail);
+            } else {
+              _this.$message.error(res.msg);
+            }
+          }
         } else {
-          _this.$message.error(res.msg);
+          try {
+            let a = document.createElement("a");
+            let blob = new Blob([res]);
+            let objectUrl = URL.createObjectURL(blob);
+            a.setAttribute("href", objectUrl);
+            a.setAttribute("download", params["export-name"] || "download");
+            a.click();
+            return;
+          } catch (e) {
+            console.log(e);
+          }
         }
-      }
-    });
+      });
+    } else {
+      return request(requestParam).then(res => {
+        if (res.code === 200) {
+          cb && cb(res);
+          if (params.close) {
+            _this.closeDialog(_this.dialogKey());
+          }
+          if (params.refresh) {
+            _this.refresh();
+          }
+          if (params.success) {
+            _this.$message.success(params.success);
+          }
+          if (params.back) {
+            _this.$router.go(-1);
+          }
+        } else {
+          if (params.fail) {
+            _this.$message.error(params.fail);
+          } else {
+            _this.$message.error(res.msg);
+          }
+        }
+      });
+    }
   }
 };
 
