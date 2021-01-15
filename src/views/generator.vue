@@ -182,7 +182,9 @@ export default {
           if (_urlArr.length === 2) {
             const query = _urlArr[1];
             params.url = _urlArr[0];
-            params.params = [query, params.params].join("&");
+            if (query) {
+              params.params = [query, params.params].join("&");
+            }
           }
           if (this.pageType === "list") {
             params.params = [
@@ -192,8 +194,10 @@ export default {
             // params.params["pageSize"] = size;
             // params.params["pageIndex"] = index;
           }
-          params.url += "?" + params.params;
-          delete params.params;
+          if (params.params) {
+            params.url += "?" + params.params;
+            delete params.params;
+          }
         } else {
           params.data = _request.data.body;
           params.headers = {
