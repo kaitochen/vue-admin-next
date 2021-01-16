@@ -21,7 +21,10 @@ Vue.use(Generator, {
     request: _request,
     http: _http
   },
-  upload: _serverUpload
+  upload: _serverUpload,
+  custom: {
+    upload: () => {}
+  }
 });
 // import "./api/mock";
 new Vue({
